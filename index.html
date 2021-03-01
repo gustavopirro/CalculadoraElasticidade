@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora elasticidade</title>
+</head>
+<body>
+    <h1>Calculadora de elasticidade-preço</h1>
+    <form>
+
+        <p>Insira o preço inicial</p>
+        <input type="text" id="precoInicial">
+
+        <p>Insira o preço final</p>
+        <input type="text" id="precoFinal">
+    
+        <p>Insira a demanda inicial</p>
+        <input type="text" name="" id="demandaInicial">
+        <p>Insira a demanda final</p>
+        <input type="text" name="" id="demandaFinal">
+        
+        <input type="button" onclick="getPrecoElasticidade()" value="Calcular">
+    </form>
+
+    <h2 id="answer"></h2>
+
+
+</body>
+<script>
+    let getPrecoElasticidade = () => {
+
+        let precoInicial = document.getElementById("precoInicial").value;
+        precoInicial = parseFloat(precoInicial);
+
+        let precoFinal = document.getElementById("precoFinal").value;
+        precoFinal = parseFloat(precoFinal);
+
+        let demandaInicial = document.getElementById("demandaInicial").value;
+        demandaInicial = parseFloat(demandaInicial);
+
+        let demandaFinal = document.getElementById("demandaFinal").value;
+        demandaFinal = parseFloat(demandaFinal);
+        
+        let varDemanda = ((demandaInicial - demandaFinal) / demandaInicial);
+        let varPreco = ((precoInicial - precoFinal) / precoInicial);
+        
+        let calcularPontoMedio = () =>{
+            
+            let demandaMedia = (demandaFinal + demandaInicial) / 2;
+            let precoMedio = (precoFinal + precoInicial) / 2;
+            let elastMedia = ((demandaFinal - demandaInicial) / demandaMedia) / ((precoFinal- precoInicial)/precoMedio);
+            if(elastMedia < 0 ){
+                return elastMedia * -1;
+            }
+            return elastMedia;
+        }
+
+        let pontomedio = calcularPontoMedio();
+
+
+        if(varPreco < 0 && varDemanda > 0 ) {
+            varPreco = -1 * varPreco;
+        }
+        
+        let elasticidade = varDemanda / varPreco;
+        elasticidade = elasticidade;
+
+        let tipoElasticidade;
+        if(elasticidade > 0 && elasticidade < 1 ){
+            tipoElasticidade = "Inelastica";
+        }else if(elasticidade >1 && elasticidade < 99999999){
+            tipoElasticidade = "Elastica";
+        }else if (elasticidade == 1){
+            tipoElasticidade = "Unitaria";
+        }
+
+    
+
+        document.getElementById("answer").innerHTML = "Variação percentual de demanda" + ":" + varDemanda.toFixed(3) + 
+        "</br>" + "Variação percentual de preço" + ":" + varPreco.toFixed(3) + 
+        "</br>" + "Elasticidade:" + elasticidade.toFixed(3) + 
+        "</br> Tipo: " + tipoElasticidade + 
+        "</br> Elasticidade do Ponto Médio:" + pontomedio;
+    }
+
+</script>
+</html>
